@@ -246,7 +246,7 @@ class Map:
 		self.signalfreq[int(gridwidth/2)][int(gridwidth/2)] = self.powerspectrumfunc(0)
 
 		self.signalfreq = numpy.array(self.signalfreq)
-		self.signalpixel = numpy.fft.fft2(self.signalfreq)
+		self.signalpixel = numpy.real(numpy.fft.fft2(self.signalfreq))
 		self.signalpixelwithphase = self.phasefactor(self.signalpixel+0.0)
 
 		# return self.signalfreq #generate ft into pixel space
@@ -277,5 +277,11 @@ class Map:
 			i=i+1
 
 		return magk, self.PowerSpectrum
+
+	def saveMap(self):
+		outfile = 'mapi64'
+		outfiletwo = 'truemapi64'
+		numpy.savetxt(outfile, self.noiseymapwithphase, delimiter=',')
+		numpy.savetxt(outfiletwo, self.signalpixelwithphase, delimiter=',')
 
 
